@@ -24,25 +24,20 @@ import {
   FormItem,
   FormLabel,
 } from "../components/ui/form";
-
 import { useForm } from "react-hook-form";
-
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import * as z from "zod";
-
 import { Form, FormMessage } from "../components/ui/form";
 import { ReloadIcon } from "@radix-ui/react-icons";
+import axios from "axios";
+import { Login } from "../Services/AuthService";
 
 const formSchema = z.object({
   email: z.string().email({
     message: "Please enter a valid email address.",
   }),
-  password: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
-  }),
-  role: z.string({
-    message: "Please select a role.",
+  password: z.string({
+    message: "Please enter a valid password.",
   }),
 });
 
@@ -52,12 +47,19 @@ export function LoginForm() {
     defaultValues: {
       email: "",
       password: "",
-      role: "",
     },
   });
 
-    function onSubmit(values) {
-    console.log(values);
+  async function onSubmit(values) {
+    if (values.email && values.password) {
+      console.log(values);
+      const data = {
+        username: values.email,
+        password: values.password,
+      };
+      const response = await Login(data);
+      console.log(response);
+    }
   }
 
   // const navigate = useNavigate();
@@ -114,40 +116,6 @@ export function LoginForm() {
                   </FormItem>
                 )}
               />
-
-              <FormField
-                control={form.control}
-                name="role"
-                render={({ field }) => (
-                  <FormItem>
-                    <div className="flex flex-col space-y-1.5">
-                      <FormLabel htmlFor="role">Role</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger id="role">
-                            <SelectValue placeholder="Select" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent position="popper">
-                          <SelectItem value="admin">Admin</SelectItem>
-                          <SelectItem value="deliveryman">
-                            DeliveryMan
-                          </SelectItem>
-                          <SelectItem value="supplier">Supplier</SelectItem>
-                          <SelectItem value="wmanager">
-                            WareHouse Manager
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
             </div>
           </CardContent>
           <CardFooter className="flex justify-center">
