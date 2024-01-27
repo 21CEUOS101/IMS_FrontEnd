@@ -10,14 +10,6 @@ import {
   CardTitle,
 } from "../components/ui/card";
 import { Input } from "../components/ui/input";
-import { Label } from "../components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../components/ui/select";
 import {
   FormControl,
   FormField,
@@ -31,6 +23,7 @@ import { Form, FormMessage } from "../components/ui/form";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import axios from "axios";
 import { Login } from "../Services/AuthService";
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -58,11 +51,16 @@ export function LoginForm() {
         password: values.password,
       };
       const response = await Login(data);
+
+      if (response.token != null) {
+        navigate("/");
+      }
+
       console.log(response);
     }
   }
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const role = "User";
 

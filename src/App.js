@@ -3,7 +3,6 @@ import Dashboard from "./Custom_Components/Dashboard";
 import Navbar from "./Custom_Components/Navbar";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
-import { Button } from "./components/ui/button";
 import "./styles/globals.css";
 import { url } from "./Services";
 import { useEffect, useState } from "react";

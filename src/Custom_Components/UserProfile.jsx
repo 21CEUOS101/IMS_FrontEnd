@@ -7,6 +7,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "../components/ui/hover-card";
+import { EditProfile } from "./EditProfile";
 
 export function UserProfile() {
   return (
@@ -19,25 +20,22 @@ export function UserProfile() {
           </Avatar>
         </Button>
       </HoverCardTrigger>
-      <HoverCardContent className="w-80">
+      <HoverCardContent className=" w-96">
         <div className="flex justify-between space-x-4">
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@profile" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <div className="space-y-1">
-            <h4 className="text-sm font-semibold">User Name</h4>
-                      <p className="text-sm">Emai Id : </p>
-                        <p className="italic">{"prajapatiashish40567@gmail.com"}</p>
-                      <p className="text-sm">Phone No : </p>
-                      <p className="italic">{"1234567890"}</p>
+          
+          <div className="space-y-2">
+          <h4 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+            Ashish Prajapati
+          </h4>
+          <small className="text-sm font-medium leading-none">Email address : </small>
+          <p className="text-muted-foreground text-sm shadcn-light">prajapatiashish40567@gmail.com</p>
+          <small className="text-sm font-medium leading-none">Phone no. : </small>
+          <p className="text-muted-foreground text-sm shadcn-light">1234567890</p>
+          <small className="text-sm font-medium leading-none">Address :</small>
+          <p className="text-muted-foreground text-sm shadcn-light">India</p>
 
-                      <p className="text-sm">Address : </p>
-                    <p className="italic">{"India"}</p>
             <p>
-              <Button variant="outline" size="small" className="p-2">
-                Edit Profile
-              </Button>
+              <EditProfile />
             </p>
             <div className="flex items-center pt-2">
               <CalendarIcon className="mr-2 h-4 w-4 opacity-70" />{" "}
