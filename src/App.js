@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Dashboard from "./Custom_Components/Dashboard";
+// import Dashboard from "./Custom_Components/Dashboard";
 import Navbar from "./Custom_Components/Navbar";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
@@ -7,6 +7,14 @@ import "./styles/globals.css";
 import { url } from "./Services";
 import { useEffect, useState } from "react";
 import Axios from "axios";
+import Dashboard from "./Delivery_man/Dashboard/Dashboard";
+import Sidebar from "./Delivery_man/Sidebar";
+import { Completed } from "./Delivery_man/Completed/Completed";
+import Return from "./Delivery_man/Return/Return";
+import Logout from "./Delivery_man/Logout";
+import Pending from "./Delivery_man/Pending/Pending";
+import 'semantic-ui-css/semantic.min.css';
+
 
 function App() {
 
@@ -44,11 +52,22 @@ function App() {
   return (
     <Router>
       <div className="App">
-        {isLoggedIn && <Navbar />}
+        {/* {isLoggedIn && <DeliverymanNavbar/>} */}
         <Routes>
           <Route path="/" element={isLoggedIn ? <Dashboard /> : <Login/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          {/* {Deliverey_man} */}
+                   
+                    <Route path="/Delivery_man/Sidebar" element={<Sidebar></Sidebar>}></Route>
+                    <Route path="/Delivery_man/Dashboard" element={<Dashboard></Dashboard>}></Route>
+                    <Route path="/Delivery_man/Completed" element={<Completed></Completed>}></Route>
+                    <Route path="/Delivery_man/Pending" element={<Pending></Pending>}></Route>
+                    <Route path="/Delivery_man/Return" element={<Return></Return>}></Route>
+           
+                    <Route path="/Delivery_man/Logout" element={<Logout></Logout>}></Route>
+
+
         </Routes>
       </div>
     </Router>
