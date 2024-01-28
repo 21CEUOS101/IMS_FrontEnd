@@ -7,7 +7,7 @@ const Logout = () => {
         icon: "success" ,
         timer: 1500
       }).then(()=>[
-        window.location.href="/Dashboard"
+        window.location.href="/Delivery_man/Dashboard"
       ]);
   return (
     <div></div>
