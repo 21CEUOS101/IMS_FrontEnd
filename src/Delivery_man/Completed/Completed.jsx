@@ -1,76 +1,108 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../Sidebar';
 import OrderCard from './OrderCard';
 import W2WOrderCard from './W2WOrderCard';
 import Pagination from '../Pagination';
 import { getorder_statusCByDId } from '../../Services/DeliveryManService';
-import {getw2worder_statusCByDId} from '../../Services/DeliveryManService';
+import { getw2worder_statusCByDId } from '../../Services/DeliveryManService';
+import Example from '../Loader/Spokes';
 
 export const Completed = () => {
-  const id = 'd800453';
   const [orderData, setOrderData] = useState([]);
   const [w2wOrderData, setw2wOrderData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
- 
+  const [currentOrderPage, setCurrentOrderPage] = useState(1);
+  const [currentW2WOrderPage, setCurrentW2WOrderPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [showOrders, setShowOrders] = useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const order = await getorder_statusCByDId(id);
-        const w2worder = await getw2worder_statusCByDId(id);
+        const order = await getorder_statusCByDId();
+        const w2worder = await getw2worder_statusCByDId();
         setOrderData(order);
         setw2wOrderData(w2worder);
-       
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
     fetchData();
-  }, [currentPage]); // Change this number as per your requirement
+  }, [showOrders]); // Fetch data when showOrders changes
 
   // Dummy data for orders
   if (orderData === null || w2wOrderData === null) {
     return <div>Loading...</div>; // or return a loading indicator
   }
 
+  // Combine both order and W2W order data based on showOrders state
+  const combinedData = showOrders ? orderData : w2wOrderData;
+  const currentPage = showOrders ? currentOrderPage : currentW2WOrderPage;
+  const setCurrentPage = showOrders ? setCurrentOrderPage : setCurrentW2WOrderPage;
 
-   // const [currentPage, setCurrentPage] = useState(1);
-   const itemsPerPage = 3; // Number of items to display per page
+  // Paginate data
+  const itemsPerPage = 3;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = currentPage * itemsPerPage;
+  const currentData = combinedData.slice(startIndex, endIndex);
+  const totalItems = combinedData.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-   // Calculate the indexes for the current page
-   const startIndex = (currentPage - 1) * itemsPerPage;
-   const endIndex = currentPage * itemsPerPage;
- 
-   // Combine both order and w2w order data
-   const combinedData = [...orderData, ...w2wOrderData];
- 
-   // Get the data for the current page
-   const currentData = combinedData.slice(startIndex, endIndex);
- 
-   // Calculate total pages
-   const totalItems = combinedData.length;
-   const totalPages = Math.ceil(totalItems / itemsPerPage);
   // Change page
-  const onPageChange = pageNumber => setCurrentPage(pageNumber);
+  const onPageChange = pageNumber => {
+    setCurrentPage(pageNumber);
+    // Scroll to top when changing pages
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div style={{ display: 'flex' }}>
       <Sidebar />
-      <div style={{ flexGrow: 1, padding: '20px' }}>
-      {currentData.map((item, index) => (
-          <div key={index}>
-            {item?.order === undefined ? (
-               item && <W2WOrderCard data={item} />
-              
-            ) : (
-              item && <OrderCard data={item} />
-            )}
-          </div>
-        ))}
-        <Pagination 
-          currentPage={currentPage} 
-          totalOrderPages={totalPages} 
-          onPageChange={onPageChange} 
-        />
+      <div style={{ flexGrow: 1, padding: '20px', textAlign: 'center' }}>
+        <div style={{ marginBottom: '10px' }}>
+          <button
+            onClick={() => { setShowOrders(true); setCurrentOrderPage(1); }}
+            style={{
+              padding: '10px 20px',
+              marginRight: '20px',
+              backgroundColor: showOrders ? '#4CAF50' : '#ddd',
+              color: showOrders ? '#fff' : '#000',
+              border: 'none',
+              borderRadius: '5px',
+              cursor: 'pointer',
+            }}
+          >
+            Orders
+          </button>
+          <button
+            onClick={() => { setShowOrders(false); setCurrentW2WOrderPage(1); }}
+            style={{
+              padding: '10px 20px',
+              backgroundColor: showOrders ? '#ddd' : '#4CAF50',
+              color: showOrders ? '#000' : '#fff',
+              border: 'none',
+              borderRadius: '5px',
+              cursor: 'pointer',
+            }}
+          >
+            W2W Orders
+          </button>
+        </div>
+        {loading ? (
+          <Example /> // Render loading spinner while data is being fetched
+        ) : (
+          currentData.map((item, index) => (
+            <div key={index}>
+              {showOrders ? (
+                <OrderCard data={item} />
+              ) : (
+                <W2WOrderCard data={item} />
+              )}
+            </div>
+          ))
+        )}
+        <Pagination currentPage={currentPage} totalOrderPages={totalPages} onPageChange={onPageChange} />
       </div>
     </div>
   );

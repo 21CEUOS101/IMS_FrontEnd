@@ -2,7 +2,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useState } from 'react';
-import W2WorderDetailsDialog from '../DialogboxCard/W2WorderDetailsDialog';
+import W2WorderDetailsDialog from './W2WorderDetailsDialog';
 import { Label } from 'semantic-ui-react';
 import Button1 from '@mui/material/Button';
 import {Shippedw2wOrder} from '../../Services/DeliveryManService'
@@ -26,7 +26,7 @@ const generateRandomColor = () => {
 };
 
 function HoverCardWithHeaderExample({ data }) {
-  const id = 'd800453';
+  // const id = 'd800453';
   const { r_warehouse, s_warehouse, w2worder, product } = data;
   const randomBackgroundColor = generateRandomColor();
   const [isHovered1, setIsHovered1] = useState(false);
@@ -51,7 +51,7 @@ function HoverCardWithHeaderExample({ data }) {
   };
   const handleShipped = async (data) =>{
     try {
-      const order = await Shippedw2wOrder(id,data.id);
+      const order = await Shippedw2wOrder(data.id);
       if (order) {
         console.log("order started successfully");
         Swal.fire({

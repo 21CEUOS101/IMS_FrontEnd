@@ -3,6 +3,7 @@ import { url } from './index';
 
 // const token = "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W3siYXV0aG9yaXR5IjoiQURNSU4ifV0sInN1YiI6ImFzaGlzaEBnbWFpbC5jb20iLCJpYXQiOjE3MDYzNTA4ODcsImV4cCI6MTcwNjM2ODg4N30.N07njdeJTWXnw7UHF8XL8-TcN4gJViNORA7oDfiZwKP82K6aiT0NgG1qfnGCpNGP64_H1vMHgbxkfbjEHqYGCA";
 const token = localStorage.getItem('jwt');
+const id="d800453";
 const config = {
     headers: {
         'Authorization': `Bearer ${token}`,
@@ -11,9 +12,9 @@ const config = {
     withCredentials: true,
 };
 
-export const getorder_statusCByDId = async (id) => {
+export const getorder_statusCByDId = async () => {
     try {
-        console.log(id);
+        // console.log(id);
         const response = await Axios.get(`${url}/api/order/orderstatusCByDId/${id}`, config);
         console.log(response.data);
         return response.data;
@@ -22,12 +23,12 @@ export const getorder_statusCByDId = async (id) => {
         return null; // Or handle the error as needed
     }
 }
-export const getw2worder_statusCByDId = async (id) => {
+export const getw2worder_statusCByDId = async () => {
     try {
 
 
         const response = await Axios.get(`${url}/api/w2worder/w2worderstatusCByDId/${id}`, config);
-        console.log(response.data);
+       
         return response.data;
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -35,7 +36,7 @@ export const getw2worder_statusCByDId = async (id) => {
     }
 
 }
-export const getorder_statusPByDId = async (id) => {
+export const getorder_statusPByDId = async () => {
     try {
         console.log(id);
         const response = await Axios.get(`${url}/api/order/orderstatusPByDId/${id}`, config);
@@ -46,7 +47,7 @@ export const getorder_statusPByDId = async (id) => {
         return null; // Or handle the error as needed
     }
 }
-export const getw2worder_statusPByDId = async (id) => {
+export const getw2worder_statusPByDId = async () => {
     try {
         const response = await Axios.get(`${url}/api/w2worder/w2worderstatusPByDId/${id}`, config);
         console.log(response.data);
@@ -56,7 +57,7 @@ export const getw2worder_statusPByDId = async (id) => {
         return null; // Or handle the error as needed
     }
 }
-export const getDeliveryManProfile = async (id) => {
+export const getDeliveryManProfile = async () => {
     try {
         const response = await Axios.get(`${url}/api/deliveryman/profile/${id}`, config);
         // console.log(response.data);
@@ -66,7 +67,7 @@ export const getDeliveryManProfile = async (id) => {
         return null; // Or handle the error as needed
     }
 }
-export const updateProfile = async (id, data) => {
+export const updateProfile = async ( data) => {
     try {
         const response = await Axios.post(`${url}/api/deliveryman/${id}`, data, config);
         // console.log(response.data);
@@ -76,7 +77,7 @@ export const updateProfile = async (id, data) => {
         return null; // Or handle the error as needed
     }
 }
-export const getorderstatusShipped = async (id) => {
+export const getorderstatusShipped = async () => {
     try {
         const response = await Axios.get(`${url}/api/order/orderstatusSByDId/${id}`, config);
         // console.log("hello1");
@@ -87,7 +88,7 @@ export const getorderstatusShipped = async (id) => {
         return null; // Or handle the error as needed
     }
 }
-export const getw2worderstatusShipped = async (id) => {
+export const getw2worderstatusShipped = async () => {
     try {
         const response = await Axios.get(`${url}/api/w2worder/w2worderstatusSByDId/${id}`, config);
         // console.log("hello2");
@@ -98,9 +99,10 @@ export const getw2worderstatusShipped = async (id) => {
         return null; // Or handle the error as needed
     }
 }
-export const Completedorder = async (id, status) => {
+export const Completedorder = async (id1,status) => {
+
     try {
-        const response = await Axios.post(`${url}/api/order/${id}/status`, null, {
+        const response = await Axios.post(`${url}/api/order/${id1}/status`, null, {
             params: {
                 status: status
             },
@@ -114,9 +116,9 @@ export const Completedorder = async (id, status) => {
         return null; // Or handle the error as needed
     }
 }
-export const Completedw2worder = async (id, status) => {
+export const Completedw2worder = async ( id1,status) => {
     try {
-        const response = await Axios.post(`${url}/api/w2worder/${id}/status`, null, {
+        const response = await Axios.post(`${url}/api/w2worder/${id1}/status`, null, {
             params: {
                 status: status
             },
@@ -130,7 +132,7 @@ export const Completedw2worder = async (id, status) => {
         return null; // Or handle the error as needed
     }
 }
-export const Shippedw2wOrder = async (id, order) => {
+export const Shippedw2wOrder = async ( order) => {
     try {
         console.log(id)
         console.log(order)
@@ -148,7 +150,7 @@ export const Shippedw2wOrder = async (id, order) => {
         return null; // Or handle the error as needed
     }
 }
-export const ShippedOrder = async (id, order) => {
+export const ShippedOrder = async ( order) => {
     try {
         const response = await Axios.post(`${url}/api/order/assignBydeliveryman/${id}/data`, null, {
             params: {
@@ -164,3 +166,52 @@ export const ShippedOrder = async (id, order) => {
         return null; // Or handle the error as needed
     }
 }
+export const NumberofCustomer =async() =>{
+    try {
+        const response = await Axios.get(`${url}/api/order/numberofcustomer/${id}`, config);
+       
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null; // Or handle the error as needed
+    }
+}
+export const totalCompletedOrders =async() =>{
+    try {
+        const response = await Axios.get(`${url}/api/order/orderstatusCByDId/${id}`, config);
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null; // Or handle the error as needed
+    }
+}
+export const totalCancelOrder =async() =>{
+    try {
+        const response = await Axios.get(`${url}/api/order/totalorderCancelByDid/${id}`, config);
+         return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null; // Or handle the error as needed
+    }
+}
+export const totalWarehouse =async() =>{
+    try {
+        const response = await Axios.get(`${url}/api/w2worder/numberofwarehouseByDid/${id}`, config);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null; // Or handle the error as needed
+    }
+}
+    export const totalCompletedW2WOrders =async() =>{
+        try {
+            const response = await Axios.get(`${url}/api/w2worder/w2worderstatusCByDId/${id}`, config);
+       
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            return null; // Or handle the error as needed
+        }
+    }
+    

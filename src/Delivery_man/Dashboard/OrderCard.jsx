@@ -1,11 +1,10 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
-import { useEffect } from 'react';
+
 import Card from 'react-bootstrap/Card';
 import { useState } from 'react';
+import Button1 from '@mui/material/Button';
 import OrderDetailsDialog from '../DialogboxCard/OrderDetailsDialog';
 import { Label } from 'semantic-ui-react';
-import Button1 from '@mui/material/Button';
 import { Completedorder } from '../../Services/DeliveryManService';
 import Swal from 'sweetalert2';
 const mainColors = [
@@ -66,7 +65,7 @@ function HoverCardWithHeaderExample({ data }) {
           window.location.href = "/Delivery_man/dashboard"
         ]);
       } else {
-        console.log("Failed to update profile");
+        console.log("Failed to delivered profile");
         Swal.fire({
           title: " Something went wrong!",
           icon: "question",
@@ -96,6 +95,7 @@ function HoverCardWithHeaderExample({ data }) {
         overflow: 'hidden',
         height: "190px",
         marginBottom: "10px",
+        marginTop:"30px",
         background: 'linear-gradient(45deg, #7FB3D5, #BBE5F3)', // Gradient background
       }}
       onMouseEnter={(e) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useState } from 'react';
-import OrderDetailsDialog from '../DialogboxCard/OrderDetailsDialog';
+import OrderDetailsDialog from './OrderDetailsDialog';
 import { Label } from 'semantic-ui-react';
 import Button1 from '@mui/material/Button';
 import {ShippedOrder} from '../../Services/DeliveryManService'
@@ -49,9 +49,9 @@ function HoverCardWithHeaderExample({ data }) {
     setIsDialogOpen(false);
   };
   const handleShipped =async(data)=>{
-    const id = 'd800453';
+    // const id = 'd800453';
     try {
-      const order = await ShippedOrder(id,data.id);
+      const order = await ShippedOrder(data.id);
       if (order) {
         console.log("order started successfully");
         Swal.fire({

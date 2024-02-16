@@ -1,13 +1,14 @@
 import React from 'react'
 import Swal from 'sweetalert2';
 const Logout = () => {
-    Swal.fire({
+  localStorage.clear();
+  Swal.fire({
         title: "Logout successfully",
         // text: "That thing is still around?",
-        icon: "success" ,
-        timer: 1500
+        icon: "success" 
       }).then(()=>[
-        window.location.href="/Delivery_man/Dashboard"
+      
+        window.location.href="/"
       ]);
   return (
     <div></div>

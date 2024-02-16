@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+// import { useState } from 'react';
 import {
   CDBSidebar,
   CDBSidebarContent,
@@ -11,19 +11,12 @@ import {
 import './Sidebar.css';
 import { NavLink } from 'react-router-dom';
 import { DUserProfile } from './Profile/DeliverymanProfileCard';
-
+import 'semantic-ui-css/semantic.min.css';
 
 
 const Sidebar = () => {
-  const [showProfile, setShowProfile] = useState(false);
-  const handleMouseEnter = () => {
-    setShowProfile(true);
-  };
-
-  // Function to handle mouse leave
-  const handleMouseLeave = () => {
-    setShowProfile(false);
-  };
+  // const [showProfile, setShowProfile] = useState(false);
+ 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
 
@@ -49,31 +42,32 @@ const Sidebar = () => {
           </CDBSidebarHeader>
 
 
-          <CDBSidebarContent className="sidebar-content">
+          <CDBSidebarContent className="sidebar-content" style={{textColor:"#fff" ,backgroundColor:"#000"}}>
             <CDBSidebarMenu>
-              <NavLink exact to="/Delivery_man/Dashboard" activeClassName="activeClicked">
+              <NavLink exact to="/Delivery_man/Dashboard" activeClassName="activeClicked" style={{color:"white"}}>
                 <CDBSidebarMenuItem icon="columns" className="sidebar-item">
-                  Dashboard
+                  Dashboard 
                 </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/Delivery_man/Pending" activeClassName="activeClicked">
+              <NavLink exact to="/Delivery_man/Pending" activeClassName="activeClicked" style={{color:"white"}}>
                 <CDBSidebarMenuItem icon="table" className="sidebar-item">
-                  Pending
+                  Pending Order
                 </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/Delivery_man/Completed" activeClassName="activeClicked">
+              <NavLink exact to="/Delivery_man/Completed" activeClassName="activeClicked" style={{color:"white"}}>
                 <CDBSidebarMenuItem icon="user" className="sidebar-item">
-                  Completed
+                  Completed Order
                 </CDBSidebarMenuItem>
               </NavLink>
               <NavLink
                 exact
                 to="/Delivery_man/Return"
                 activeClassName="activeClicked"
+                style={{color:"white"}}
 
               >
                 <CDBSidebarMenuItem icon="chart-line" className="sidebar-item">
-                  Profile
+                  Return Order
                 </CDBSidebarMenuItem>
               </NavLink>
 
@@ -85,7 +79,7 @@ const Sidebar = () => {
           <CDBSidebarFooter style={{ textAlign: 'center' }}>
             <div style={{ padding: '2px 2px' }}>
               <CDBSidebarMenu>
-                <NavLink exact to="/Delivery_man/Logout" activeClassName="activeClicked">
+                <NavLink exact to="/Delivery_man/Logout" activeClassName="activeClicked" style={{color:"white"}}>
 
                   <CDBSidebarMenuItem icon="user" className="sidebar-item">
                     Logout

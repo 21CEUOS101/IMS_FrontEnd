@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import Swal from 'sweetalert2';
 import { Button } from "../components/ui/button";
 import {
   Card,
@@ -53,7 +53,14 @@ export function LoginForm() {
       const response = await Login(data);
 
       if (response.token != null) {
-        navigate("/");
+        Swal.fire({
+          title: "Login successfully",
+         
+          icon: "success" 
+        }).then(()=>[
+        
+          window.location.href="/Delivery_man/Dashboard"
+        ]);
       }
 
       console.log(response);

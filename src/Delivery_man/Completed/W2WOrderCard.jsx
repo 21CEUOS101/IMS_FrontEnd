@@ -3,7 +3,8 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useState } from 'react';
 import W2WorderDetailsDialog from '../DialogboxCard/W2WorderDetailsDialog';
-import { Label } from 'semantic-ui-react';
+import { Label, LabelDetail } from 'semantic-ui-react';
+// import { Label } from 'semantic-ui-react';
 const mainColors = [
   '#FADBD8', // Light Coral
   '#F5CBA7', // Light Salmon
@@ -58,7 +59,7 @@ function HoverCardWithHeaderExample({ data }) {
         transition: 'transform 0.3s, box-shadow 0.3s',
         borderRadius: '10px',
         overflow: 'hidden',
-        height: "180px",
+        height: "170px",
         marginBottom: "10px",
         background: 'linear-gradient(45deg, #7FB3D5, #BBE5F3)', // Gradient background
       }}

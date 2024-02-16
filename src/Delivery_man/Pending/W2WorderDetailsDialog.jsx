@@ -24,7 +24,6 @@ const OrderDetailsDialog = ({ isOpen, handleClose, details }) => {
                         <h6>Status:{w2worder.status == "delivered"?<span style={{ color: "green" }}> Delivered</span>:w2worder.status=== 'pending'?<span style={{ color: "red" }}> Pending</span>:<span style={{ color: "blue" }}> shipped</span>}</h6>
                         <h6>Quantity: {w2worder.quantity}</h6>
                         <h6>Total Amount: {w2worder.total_amount}</h6>
-                        <h6>Delivery Date Time: {w2worder.delivered_date_time}</h6>
                         <h6>Date Time: {w2worder.date_time}</h6>
                         <h6>Order Id : {w2worder.orderId}</h6>
                     </div>

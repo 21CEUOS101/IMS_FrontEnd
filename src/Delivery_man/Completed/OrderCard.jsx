@@ -59,7 +59,7 @@ function HoverCardWithHeaderExample({ data }) {
         transition: 'transform 0.3s, box-shadow 0.3s',
         borderRadius: '10px',
         overflow: 'hidden',
-        height: "180px",
+        height: "170px",
         marginBottom: "10px",
         background: 'linear-gradient(45deg, #7FB3D5, #BBE5F3)', // Gradient background
       }}
@@ -79,7 +79,7 @@ function HoverCardWithHeaderExample({ data }) {
         <span style={{marginLeft:"700px"}}>Order no. :- {order?.id}</span>
       </Card.Header>
       <Card.Body style={{ display: 'flex', flexDirection: 'row', background: "#FFFAFA" }}>
-        <div style={{ flex: 1.4 }}>
+        <div style={{ flex: 0.5 }}>
         <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Customer name :  {user.name}</span></Card.Text>
          <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Customer phone :{user.phone}</span></Card.Text>
          <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Customer Address :  {customer.address}, {customer.pincode}</span></Card.Text>

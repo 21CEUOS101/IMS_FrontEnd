@@ -16,13 +16,13 @@ import { UserProfile } from "./MoreDetails";
 
 export function DUserProfile() {
 
-    const id = 'd800453';
+    // const id = 'd800453';
     const [profile, setprofile] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const profile = await getDeliveryManProfile(id);
+                const profile = await getDeliveryManProfile();
                 setprofile(profile);
 
             } catch (error) {

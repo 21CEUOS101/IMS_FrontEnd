@@ -5,21 +5,23 @@ import W2WOrderPendingCard from './W2WOrderPendingCard';
 import Pagination from '../Pagination';
 import { getorder_statusPByDId } from '../../Services/DeliveryManService';
 import {getw2worder_statusPByDId} from '../../Services/DeliveryManService';
+import Spin from '../Loader/Spinner';
 
  const Pending = () => {
-  const id = 'd800453';
+  // const id = 'd800453';
   const [orderData, setOrderData] = useState([]);
   const [w2wOrderData, setw2wOrderData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [Loading,setloading] =useState(true);
   const ordersPerPage = 3;
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const order = await getorder_statusPByDId(id);
-        const w2worder = await getw2worder_statusPByDId(id);
+        const order = await getorder_statusPByDId();
+        const w2worder = await getw2worder_statusPByDId();
         setOrderData(order);
         setw2wOrderData(w2worder);
-       
+       setloading(false)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -50,7 +52,10 @@ import {getw2worder_statusPByDId} from '../../Services/DeliveryManService';
     <div style={{ display: 'flex' }}>
       <Sidebar />
       <div style={{ flexGrow: 1, padding: '20px' }}>
-      {currentData.map((item, index) => (
+      {Loading ? (
+        <Spin /> // Render loading spinner while data is being fetched
+      ) : (
+      currentData.map((item, index) => (
           <div key={index}>
             {item?.order === undefined ? (
                item && <W2WOrderPendingCard data={item} />
@@ -59,7 +64,7 @@ import {getw2worder_statusPByDId} from '../../Services/DeliveryManService';
               item && <OrderPendingCard data={item} />
             )}
           </div>
-        ))}
+        ))  )}
         <Pagination 
           currentPage={currentPage} 
           totalOrderPages={totalPages} 
