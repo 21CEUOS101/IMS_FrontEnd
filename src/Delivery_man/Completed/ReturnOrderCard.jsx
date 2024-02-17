@@ -73,8 +73,8 @@ function HoverCardWithHeaderExample({ data }) {
       }}
     >
       <Card.Header style={{ position: 'relative', backgroundColor: randomBackgroundColor, color: '#000', fontSize: "1.2rem", display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.5rem 1rem', height: "40px" }}>
-        <Label as='b' color='green' ribbon style={{ position: 'absolute', marginLeft: "20px", top: '0.5rem', left: '-1.5rem', fontSize: '1rem' }}>
-          Customer Order
+        <Label as='b' color='blue' ribbon style={{ position: 'absolute', marginLeft: "20px", top: '0.5rem', left: '-1.5rem', fontSize: '1rem' }}>
+          Return Order
         </Label>
         <span style={{ marginLeft: "700px" }}>Order no. :- {order?.id}</span>
       </Card.Header>

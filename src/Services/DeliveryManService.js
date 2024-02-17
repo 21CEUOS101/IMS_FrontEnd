@@ -3,7 +3,7 @@ import { url } from './index';
 
 // const token = "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W3siYXV0aG9yaXR5IjoiQURNSU4ifV0sInN1YiI6ImFzaGlzaEBnbWFpbC5jb20iLCJpYXQiOjE3MDYzNTA4ODcsImV4cCI6MTcwNjM2ODg4N30.N07njdeJTWXnw7UHF8XL8-TcN4gJViNORA7oDfiZwKP82K6aiT0NgG1qfnGCpNGP64_H1vMHgbxkfbjEHqYGCA";
 const token = localStorage.getItem('jwt');
-const id="d800453";
+const id = "d800453";
 const config = {
     headers: {
         'Authorization': `Bearer ${token}`,
@@ -28,7 +28,7 @@ export const getw2worder_statusCByDId = async () => {
 
 
         const response = await Axios.get(`${url}/api/w2worder/w2worderstatusCByDId/${id}`, config);
-       
+
         return response.data;
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -67,7 +67,7 @@ export const getDeliveryManProfile = async () => {
         return null; // Or handle the error as needed
     }
 }
-export const updateProfile = async ( data) => {
+export const updateProfile = async (data) => {
     try {
         const response = await Axios.post(`${url}/api/deliveryman/${id}`, data, config);
         // console.log(response.data);
@@ -99,7 +99,7 @@ export const getw2worderstatusShipped = async () => {
         return null; // Or handle the error as needed
     }
 }
-export const Completedorder = async (id1,status) => {
+export const Completedorder = async (id1, status) => {
 
     try {
         const response = await Axios.post(`${url}/api/order/${id1}/status`, null, {
@@ -116,7 +116,7 @@ export const Completedorder = async (id1,status) => {
         return null; // Or handle the error as needed
     }
 }
-export const Completedw2worder = async ( id1,status) => {
+export const Completedw2worder = async (id1, status) => {
     try {
         const response = await Axios.post(`${url}/api/w2worder/${id1}/status`, null, {
             params: {
@@ -132,7 +132,7 @@ export const Completedw2worder = async ( id1,status) => {
         return null; // Or handle the error as needed
     }
 }
-export const Shippedw2wOrder = async ( order) => {
+export const Shippedw2wOrder = async (order) => {
     try {
         console.log(id)
         console.log(order)
@@ -150,7 +150,7 @@ export const Shippedw2wOrder = async ( order) => {
         return null; // Or handle the error as needed
     }
 }
-export const ShippedOrder = async ( order) => {
+export const ShippedOrder = async (order) => {
     try {
         const response = await Axios.post(`${url}/api/order/assignBydeliveryman/${id}/data`, null, {
             params: {
@@ -166,17 +166,17 @@ export const ShippedOrder = async ( order) => {
         return null; // Or handle the error as needed
     }
 }
-export const NumberofCustomer =async() =>{
+export const NumberofCustomer = async () => {
     try {
         const response = await Axios.get(`${url}/api/order/numberofcustomer/${id}`, config);
-       
+
         return response.data;
     } catch (error) {
         console.error('Error fetching data:', error);
         return null; // Or handle the error as needed
     }
 }
-export const totalCompletedOrders =async() =>{
+export const totalCompletedOrders = async () => {
     try {
         const response = await Axios.get(`${url}/api/order/orderstatusCByDId/${id}`, config);
         console.log(response.data);
@@ -186,16 +186,16 @@ export const totalCompletedOrders =async() =>{
         return null; // Or handle the error as needed
     }
 }
-export const totalCancelOrder =async() =>{
+export const totalCancelOrder = async () => {
     try {
         const response = await Axios.get(`${url}/api/order/totalorderCancelByDid/${id}`, config);
-         return response.data;
+        return response.data;
     } catch (error) {
         console.error('Error fetching data:', error);
         return null; // Or handle the error as needed
     }
 }
-export const totalWarehouse =async() =>{
+export const totalWarehouse = async () => {
     try {
         const response = await Axios.get(`${url}/api/w2worder/numberofwarehouseByDid/${id}`, config);
         return response.data;
@@ -204,14 +204,110 @@ export const totalWarehouse =async() =>{
         return null; // Or handle the error as needed
     }
 }
-    export const totalCompletedW2WOrders =async() =>{
-        try {
-            const response = await Axios.get(`${url}/api/w2worder/w2worderstatusCByDId/${id}`, config);
-       
-            return response.data;
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            return null; // Or handle the error as needed
-        }
+export const totalCompletedW2WOrders = async () => {
+    try {
+        const response = await Axios.get(`${url}/api/w2worder/w2worderstatusCByDId/${id}`, config);
+
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null; // Or handle the error as needed
     }
-    
+}
+export const ReturnOrderpending = async () => {
+    try {
+        const response = await Axios.get(`${url}/api/return-orders/orderstatusPbyDid/${id}`,config);
+        return response.data;
+    } catch (error) {   
+        console.error('Error fetching data:', error);
+        return null; // Or handle the error as needed
+    }
+}
+export const ReturnOrderShipped = async () => {
+    try {
+        const response = await Axios.get(`${url}/api/return-orders/orderstatusSbyDid/${id}`,config);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null; // Or handle the error as needed
+    }
+}
+export const ReturnSupplyOrderShipped = async () => {
+    try {
+        const response = await Axios.get(`${url}/api/return-supply-orderstatusSByDid/${id}`,config);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null; // Or handle the error as needed
+    }
+}
+
+export const ROChangeStatustoS = async (order) => {
+    try {
+      
+        const response = await Axios.post(`${url}/api/return-orders/assignBydeliveryman/${id}/data`, null, {
+            params: {
+                data: order
+            },
+            ...config  
+        });
+        // console.log("hello2");
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null; // Or handle the error as needed
+    }
+}
+export const RSOCompleted = async (id1, status) => {
+
+    try {
+        const response = await Axios.post(`${url}/api/return-supply-order/${id1}/status`, null, {
+            params: {
+                status: status
+            },
+            ...config  // assuming config is defined and contains any necessary headers
+        });
+        // console.log("hello2");
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null; // Or handle the error as needed
+    }
+}
+export const ROCompleted = async (id1, status) => {
+
+    try {
+        const response = await Axios.post(`${url}/api/return-order/${id1}/status`, null, {
+            params: {
+                status: status
+            },
+            ...config  // assuming config is defined and contains any necessary headers
+        });
+        // console.log("hello2");
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null; // Or handle the error as needed
+    }
+}
+export const CReturnOrder = async () => {
+    try {
+        const response = await Axios.get(`${url}/api/order/orderstatusRbyDid/${id}`,config);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null; // Or handle the error as needed
+    }
+}
+export const CReturnSupplyOrder = async () => {
+    try {
+        const response = await Axios.get(`${url}/api/return-supply-orderstatusCByDid/${id}`,config);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null; // Or handle the error as needed
+    }
+}

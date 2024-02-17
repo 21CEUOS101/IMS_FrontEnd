@@ -2,10 +2,10 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useState } from 'react';
-import OrderDetailsDialog from './OrderDetailsDialog';
+import ReturnOrderDialogBox from './ReturnOrderDialogBox';
 import { Label } from 'semantic-ui-react';
 import Button1 from '@mui/material/Button';
-import {ShippedOrder} from '../../Services/DeliveryManService'
+import {ROChangeStatustoS} from '../../Services/DeliveryManService'
 import Swal from 'sweetalert2';
 const mainColors = [
   '#FADBD8', // Light Coral
@@ -26,7 +26,7 @@ const generateRandomColor = () => {
 };
 
 function HoverCardWithHeaderExample({ data }) {
-  const { warehouse, user, order, product, customer } = data;
+  const { warehouse, user, returnorder, product, customer } = data;
   const randomBackgroundColor = generateRandomColor();
   const [isHovered1, setIsHovered1] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -51,7 +51,7 @@ function HoverCardWithHeaderExample({ data }) {
   const handleShipped =async(data)=>{
     // const id = 'd800453';
     try {
-      const order = await ShippedOrder(data.id);
+      const order = await ROChangeStatustoS(data.id);
       if (order) {
         console.log("order started successfully");
         Swal.fire({
@@ -104,25 +104,25 @@ function HoverCardWithHeaderExample({ data }) {
       }}
     >
       <Card.Header style={{ position: 'relative', backgroundColor: randomBackgroundColor, color: '#000', fontSize: "1.2rem", display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.5rem 1rem',height:"40px" }}>
-        <Label as='b' color='green' ribbon style={{ position: 'absolute',marginLeft:"20px", top: '0.5rem', left: '-1.5rem', fontSize: '1rem' }}>
-          Customer Order
+        <Label as='b' color='blue' ribbon style={{ position: 'absolute',marginLeft:"20px", top: '0.5rem', left: '-1.5rem', fontSize: '1rem' }}>
+          Return Order
         </Label>
-        <span style={{marginLeft:"700px"}}>Order no. :- {order.id}</span>
+        <span style={{marginLeft:"700px"}}>Order no. :- {returnorder?.id}</span>
       </Card.Header>
       <Card.Body style={{ display: 'flex', flexDirection: 'row', background: "#FFFAFA" }}>
         <div style={{ flex: 0.5 }}>
-        <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Customer name :  {user.name}</span></Card.Text>
-         <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Customer phone :{user.phone}</span></Card.Text>
-         <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Customer Address :  {customer.address}, {customer.pincode}</span></Card.Text>
+        <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Customer name :  {user?.name}</span></Card.Text>
+         <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Customer phone :{user?.phone}</span></Card.Text>
+         <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Customer Address :  {customer?.address}, {customer?.pincode}</span></Card.Text>
         </div>
         <div style={{ flex: 0.7 }}>
 
-          <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Product name : {product.name}</span></Card.Text>
-          <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Quantity :{order.quantity}</span></Card.Text>
-         <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Total amount : {order.total_amount}</span></Card.Text>
+          <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Product name : {product?.name}</span></Card.Text>
+          <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Quantity :{returnorder?.quantity}</span></Card.Text>
+         <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Total amount : {returnorder?.total_amount}</span></Card.Text>
         </div>
         <div style={{ flex: 0.5 }}>
-          <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Order Status : </span> <span style={{ color: "red" }}><span style={{fontStyle:"italic"}}>{order.status === "delivered"?"Delivered" :"Pending"}</span></span></Card.Text>
+          <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Order Status : </span> <span style={{ color: "red" }}><span style={{fontStyle:"italic"}}>{returnorder?.status === "delivered"?"Delivered" :"Pending"}</span></span></Card.Text>
           <button
         style={{
           backgroundColor: isHovered1 ? '#000000' : '#FF1493',
@@ -144,13 +144,13 @@ function HoverCardWithHeaderExample({ data }) {
       >
         OrderDetails
       </button>
-      <Button1 variant="contained" color="info" onClick={()=>handleShipped(order)}>
+      <Button1 variant="contained" color="info" onClick={()=>handleShipped(returnorder)}>
   Shipped
 </Button1>
         </div>
       </Card.Body>
    
-      <OrderDetailsDialog isOpen={isDialogOpen} handleClose={handleCloseDialog} details={selectedOrder} />
+      <ReturnOrderDialogBox isOpen={isDialogOpen} handleClose={handleCloseDialog} details={selectedOrder} />
     </Card>
     
   );

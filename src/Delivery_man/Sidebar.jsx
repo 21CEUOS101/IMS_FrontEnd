@@ -59,17 +59,7 @@ const Sidebar = () => {
                   Completed Order
                 </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink
-                exact
-                to="/Delivery_man/Return"
-                activeClassName="activeClicked"
-                style={{color:"white"}}
-
-              >
-                <CDBSidebarMenuItem icon="chart-line" className="sidebar-item">
-                  Return Order
-                </CDBSidebarMenuItem>
-              </NavLink>
+            
 
 
 

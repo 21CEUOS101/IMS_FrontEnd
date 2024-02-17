@@ -1,12 +1,13 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+
 import Card from 'react-bootstrap/Card';
 import { useState } from 'react';
-import OrderDetailsDialog from './OrderDetailsDialog';
-import { Label } from 'semantic-ui-react';
 import Button1 from '@mui/material/Button';
-import {ShippedOrder} from '../../Services/DeliveryManService'
+import OrderDetailsDialog from '../DialogboxCard/OrderDetailsDialog';
+import { Label } from 'semantic-ui-react';
+import { RSOCompleted } from '../../Services/DeliveryManService';
 import Swal from 'sweetalert2';
+import ReturnSupplyOrderDialogBox from './ReturnSupplyOrderDialogBox';
 const mainColors = [
   '#FADBD8', // Light Coral
   '#F5CBA7', // Light Salmon
@@ -20,13 +21,15 @@ const mainColors = [
   '#FDEBD0', // Light Orange
 ];
 
+
 const generateRandomColor = () => {
   const randomIndex = Math.floor(Math.random() * mainColors.length);
   return mainColors[randomIndex];
 };
 
 function HoverCardWithHeaderExample({ data }) {
-  const { warehouse, user, order, product, customer } = data;
+  const [orderData, setOrderData] = useState({});
+  const { warehouse, user, rso, product, supplier } = data;
   const randomBackgroundColor = generateRandomColor();
   const [isHovered1, setIsHovered1] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -48,21 +51,22 @@ function HoverCardWithHeaderExample({ data }) {
   const handleCloseDialog = () => {
     setIsDialogOpen(false);
   };
-  const handleShipped =async(data)=>{
-    // const id = 'd800453';
+ 
+  const handleCompleted = async (data) => {
     try {
-      const order = await ShippedOrder(data.id);
+      const order = await RSOCompleted(data.id,"delivered");
+     
       if (order) {
-        console.log("order started successfully");
+        console.log("Delivered successfully");
         Swal.fire({
-          title: "shipped process start....",
+          title: "delivered  successfully",
           icon: "success",
           timer:"4000"
         }).then(() => [
           window.location.href = "/Delivery_man/dashboard"
         ]);
       } else {
-        console.log("Failed to update profile");
+        console.log("Failed to delivered profile");
         Swal.fire({
           title: " Something went wrong!",
           icon: "question",
@@ -71,11 +75,11 @@ function HoverCardWithHeaderExample({ data }) {
           window.location.href = "/Delivery_man/dashboard"
         ]);
       }
-  }
-  catch (error) {
-    console.error('Error updating profile:', error);
-  }
-
+     
+     
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   }
 
   return (
@@ -92,6 +96,7 @@ function HoverCardWithHeaderExample({ data }) {
         overflow: 'hidden',
         height: "190px",
         marginBottom: "10px",
+        marginTop:"30px",
         background: 'linear-gradient(45deg, #7FB3D5, #BBE5F3)', // Gradient background
       }}
       onMouseEnter={(e) => {
@@ -104,25 +109,25 @@ function HoverCardWithHeaderExample({ data }) {
       }}
     >
       <Card.Header style={{ position: 'relative', backgroundColor: randomBackgroundColor, color: '#000', fontSize: "1.2rem", display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.5rem 1rem',height:"40px" }}>
-        <Label as='b' color='green' ribbon style={{ position: 'absolute',marginLeft:"20px", top: '0.5rem', left: '-1.5rem', fontSize: '1rem' }}>
-          Customer Order
+        <Label as='b' color='black' ribbon style={{ position: 'absolute',marginLeft:"20px", top: '0.5rem', left: '-1.5rem', fontSize: '1rem' }}>
+          Return Supply Order
         </Label>
-        <span style={{marginLeft:"700px"}}>Order no. :- {order.id}</span>
+        <span style={{marginLeft:"700px"}}>Order no. :- {rso?.id}</span>
       </Card.Header>
       <Card.Body style={{ display: 'flex', flexDirection: 'row', background: "#FFFAFA" }}>
-        <div style={{ flex: 0.5 }}>
-        <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Customer name :  {user.name}</span></Card.Text>
-         <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Customer phone :{user.phone}</span></Card.Text>
-         <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Customer Address :  {customer.address}, {customer.pincode}</span></Card.Text>
+        <div style={{ flex: 1.4 }}>
+        <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Supplier name :  {user && user.name}</span></Card.Text>
+         <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Supplier phone :{user && user.phone}</span></Card.Text>
+         <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Supplier Address :  {user && supplier.address}, {user && supplier.pincode}</span></Card.Text>
         </div>
         <div style={{ flex: 0.7 }}>
 
-          <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Product name : {product.name}</span></Card.Text>
-          <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Quantity :{order.quantity}</span></Card.Text>
-         <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Total amount : {order.total_amount}</span></Card.Text>
+          <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Product name : {product && product.name}</span></Card.Text>
+          <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Quantity :{rso && rso.quantity}</span></Card.Text>
+         <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Total amount : {rso && rso.refund_amount}</span></Card.Text>
         </div>
         <div style={{ flex: 0.5 }}>
-          <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Order Status : </span> <span style={{ color: "red" }}><span style={{fontStyle:"italic"}}>{order.status === "delivered"?"Delivered" :"Pending"}</span></span></Card.Text>
+          <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{fontStyle:"italic"}}>Order Status : </span> <span style={{ color: "blue" }}><span style={{fontStyle:"italic"}}>{ rso && rso.status === "shipped"?"shipped" :""}</span></span></Card.Text>
           <button
         style={{
           backgroundColor: isHovered1 ? '#000000' : '#FF1493',
@@ -144,13 +149,13 @@ function HoverCardWithHeaderExample({ data }) {
       >
         OrderDetails
       </button>
-      <Button1 variant="contained" color="info" onClick={()=>handleShipped(order)}>
-  Shipped
+      <Button1 variant="contained" color="success" onClick={()=>handleCompleted(rso)}>
+  Completed
 </Button1>
         </div>
       </Card.Body>
    
-      <OrderDetailsDialog isOpen={isDialogOpen} handleClose={handleCloseDialog} details={selectedOrder} />
+      < ReturnSupplyOrderDialogBox isOpen={isDialogOpen} handleClose={handleCloseDialog} details={selectedOrder} />
     </Card>
     
   );
