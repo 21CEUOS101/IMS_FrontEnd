@@ -23,7 +23,7 @@ const RequestDetails = ({ isOpen, handleClose, details }) => {
                         <h6>Product Name: {product.name}</h6>
                         <h6>Product Quantity: {supplyorder.quantity}</h6>
                         <h6>Total Amount: {supplyorder.total_amount}</h6>
-                        <h6>Order status: {supplyorder.status === 'pending' ? <span style={{fontFamily:"cursive",color:"red"}}>Pending</span> :<>Not avaliable</>}</h6>
+                        <h6>Order status: {supplyorder.status === 'approved' ? <span style={{fontFamily:"cursive",color:"purple"}}>Approved</span> :<>Not avaliable</>}</h6>
                         <h6>Order Request Date and time :{supplyorder.date_time}</h6>
                         <h6>Order payment method:{supplyorder.payment_method}</h6>
                         <h6>Product Wholesale price: {product.whole_sale_price}</h6>

@@ -26,7 +26,6 @@ const RequestDetails = ({ isOpen, handleClose, details }) => {
                         <h6>Order status: {supplyOrder.status === 'approved' ? <span style={{fontStyle:"italic",color:"purple"}}>Approved</span> :<>Not avaliable</>}</h6>
                         <h6>Order Request Date and time: {supplyOrder.date_time}</h6>
                         <h6>Order payment method: {supplyOrder.payment_method}</h6>
-                        <h6>Delivered Date and time: {supplyOrder.delivered_date_time}</h6>
                         <h6>Product Wholesale price: {product.whole_sale_price}</h6>
                        <h6>Is Delivery_man is Free: <span style={{fontStyle:"italic", color:"green"}}>{supplyOrder.isdelivery_man_Available === true ? "True" : "False"} </span></h6>
                     </div>

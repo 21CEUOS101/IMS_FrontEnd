@@ -26,7 +26,7 @@ const generateRandomColor = () => {
 };
 
 function HoverCardWithHeaderExample({ data }) {
-  const { supplyOrder, product,warehouse,Manager_user,manager } = data;
+  const { supplyOrder, product,warehouse,user,manager } = data;
   const randomBackgroundColor = generateRandomColor();
   const [isHovered1, setIsHovered1] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -150,7 +150,7 @@ function HoverCardWithHeaderExample({ data }) {
       <Card.Body style={{ display: 'flex', flexDirection: 'row', background: "#FFFAFA" }}>
      
         <div style={{ flex: 1 }}>
-          <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{ fontStyle: "italic" }}>Manager name :  {Manager_user?.name}</span></Card.Text>
+          <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{ fontStyle: "italic" }}>Manager name :  {user?.name}</span></Card.Text>
           <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{ fontStyle: "italic" }}>WareHouse name : {warehouse?.name}</span></Card.Text>
           <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{ fontStyle: "italic" }}>Warehouse Address :  {warehouse?.address}, {warehouse?.pincode}</span></Card.Text>
         </div>

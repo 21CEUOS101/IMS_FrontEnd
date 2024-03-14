@@ -1,36 +1,62 @@
 import Axios from "axios";
 import { url } from "./index";
 
-const token = localStorage.getItem('jwt');
-
 export const Login = async ({ username, password }) => {
+  const userData = {
+    username: username,
+    password: password,
+  };
 
-    const userData = {
-        "username": username,
-        "password": password
-    };
-    localStorage.removeItem('jwt');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('password');
+  // Clear local storage
+  localStorage.removeItem("jwt");
+  localStorage.removeItem("email");
+  localStorage.removeItem("role");
+  localStorage.removeItem("id");
+  localStorage.removeItem("password");
 
-    const data = await Axios.post(`${url}/auth/login`, userData).then((response) => {
-        localStorage.setItem('jwt', response.data.token);
-        localStorage.setItem('userId', response.data.username);
-        localStorage.setItem('password', userData.password);
-        console.log(response.data);
-        return response.data;
-    });
+  try {
+    const data = await Axios.post(`${url}/auth/login`, userData).then(
+      (response) => {
+        if(response.data === "Credentials Invalid !!") return { message : response?.data, success: false };
 
-    return data;
-}
-
-export const Register = async (user) => {
-    const data = await Axios.post(`${url}/auth/register`, user).then(
-        (response) => {
-        return response.data;
-        }
+        localStorage.setItem("jwt", response.data.token);
+        localStorage.setItem("email", response.data.username);
+        localStorage.setItem("role", response.data.role);
+        localStorage.setItem("id", response.data.id);
+        localStorage.setItem("password", userData.password);
+        return { message : response?.data, success: true };
+      }
     );
-    
     return data;
-}
-    
+  } catch (e) {
+    return { message : "Something went Wrong !" , success: false };
+  }
+};
+
+export const Logout = async () => {
+  localStorage.removeItem("jwt");
+  localStorage.removeItem("email");
+  localStorage.removeItem("role");
+  localStorage.removeItem("id");
+  localStorage.removeItem("password");
+  window.location.href='/';
+};
+
+// change password
+export const change_Password = async (data) => {
+  const token = localStorage.getItem("jwt");
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+
+  try {
+    const response = await Axios.post(`${url}/auth/change-password`, data, config);
+    return response.data;
+  } catch (e) {
+    return { success: false };
+  }
+};

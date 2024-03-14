@@ -7,7 +7,7 @@ import {
     HoverCardContent,
     HoverCardTrigger,
 } from "../../components/ui/hover-card";
-import { EditProfile } from "./EditProfile";
+import { EditProfile } from "./EditProfileDeliveryman";
 import { useState } from "react";
 import { useEffect } from "react";
 import { getDeliveryManProfile } from '../../Services/DeliveryManService';

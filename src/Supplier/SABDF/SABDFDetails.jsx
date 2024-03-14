@@ -8,7 +8,7 @@ const RequestDetails = ({ isOpen, handleClose, details }) => {
     }
 
     // Destructure details object
-    const { product,supplyOrder,warehouse,Manager_user } = details;
+    const { product,supplyOrder,warehouse,user } = details;
 
     return (
         <Modal show={isOpen} onHide={handleClose}>
@@ -17,7 +17,7 @@ const RequestDetails = ({ isOpen, handleClose, details }) => {
             </Modal.Header>
 
             <Modal.Body>
-                { warehouse  && Manager_user && product && supplyOrder && (
+                { warehouse  && user && product && supplyOrder && (
                     <div>
                         <h5>Order Details</h5>
                         <h6>Product Name: {product.name}</h6>
@@ -39,12 +39,12 @@ const RequestDetails = ({ isOpen, handleClose, details }) => {
                         <h6>Address: {warehouse.address},{warehouse.pincode}</h6>
                     </div>
                 )}
-                {Manager_user && (
+                {user && (
                     <div>
                         <h5>WareHouse Manager Details</h5>
-                        <h6>Name: {Manager_user.name}</h6>
-                        <h6>Email: {Manager_user.email}</h6>
-                        <h6>phone: {Manager_user.phone}</h6>
+                        <h6>Name: {user.name}</h6>
+                        <h6>Email: {user.email}</h6>
+                        <h6>phone: {user.phone}</h6>
                     </div>
                 )}
                  

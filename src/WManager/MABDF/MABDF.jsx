@@ -41,7 +41,7 @@ const MABDT = () => {
     <>
       <Dashboard/>
      
-                <div className="mt-4">
+                <div className="mt-4" style={{marginLeft:"40px"}}>
                     {loading ? (
                         <Example />
                     ) : (

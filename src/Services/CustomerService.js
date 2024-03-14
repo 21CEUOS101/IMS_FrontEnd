@@ -1,18 +1,27 @@
 import Axios from 'axios';
 import { url } from './index.js';
 
+const token = localStorage.getItem('jwt');
+const config = {
+    headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+};
+
 export const getCustomerById = async (id) => {
         
-    const data = await Axios.get(`${url}/api/customer/${id}`).then((response) => {
+    const data = await Axios.get(`${url}/api/customer/${id}`, config).then((response) => {
         return response.data;
     });
     
-    return data;
+    return {...data, role : "customer"};
 }
 
 export const getCustomers = async () => {
             
-    const data = await Axios.get(`${url}/api/customer`).then((response) => {
+    const data = await Axios.get(`${url}/api/customer`, config).then((response) => {
         return response.data;
     });
     
@@ -21,28 +30,42 @@ export const getCustomers = async () => {
     
 export const createCustomer = async (customer) => {
             
-    const data = await Axios.post(`${url}/api/customer`, customer).then((response) => {
-        return response.data;
-    });
-    
-    return data;
+    try {
+        const data = await Axios.post(`${url}/api/customer`, customer, config).then((response) => {
+            return response.data;
+        });
+        
+        return {...data, role : "customer" , success : true};
+    }
+    catch (error) {
+        return {...error.response.data, success : false};
+    }
 }
 
-export const updateCustomer = async (customer) => {
+export const updateCustomer = async (customer , id) => {
                 
-    const data = await Axios.put(`${url}/api/customer/${id}`, customer).then((response) => {
-        return response.data;
-    });
-    
-    return data;
+    try {
+        const data = await Axios.post(`${url}/api/customer/${id}`, customer, config).then((response) => {
+            return response.data;
+        });
+        
+        return {...data, role : "customer" , success : true};
+    }
+    catch (error) {
+        return {...error.response.data, success : false};
+    }
 }
 
 export const deleteCustomer = async (id) => {
 
-    const data = await Axios.delete(`${url}/api/customer/${id}`).then((response) => {
-        return response.data;
-    });
-    
-    return data;
+    try {
+        const data = await Axios.delete(`${url}/api/customer/${id}`, config).then((response) => {
+            return response.data;
+        });
+        
+        return {...data, success : true};
+    }
+    catch (error) {
+        return {...error.response.data, success : false};
+    }
 }
-    

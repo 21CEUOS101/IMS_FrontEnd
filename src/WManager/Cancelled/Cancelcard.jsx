@@ -84,11 +84,11 @@ function HoverCardWithHeaderExample({ data }) {
       </Card.Header>
       <Card.Body style={{ display: 'flex', flexDirection: 'row', background: "#FFFAFA" }}>
      
-        <div style={{ flex: 1 }}>
+        <div style={{ flex: 0.5 }}>
           <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{ fontStyle: "italic" }}>supplier name :  {suppiler?.name}</span></Card.Text>
           <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{ fontStyle: "italic" }}>supllier Address :  {suppiler?.address}, {suppiler?.pincode}</span></Card.Text>
         </div>
-        <div style={{ flex: 0.6 }}>
+        <div style={{ flex: 0.4 }}>
           <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{ fontStyle: "italic" }}>Product name : {product?.name}</span></Card.Text>
           <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{ fontStyle: "italic" }}>Product Quantity :{supplyorder?.quantity}</span></Card.Text>
           <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{ fontStyle: "italic" }}>Total Amount :{supplyorder?.total_amount}</span></Card.Text>

@@ -1,10 +1,6 @@
 // import Profile from '../Custom_Components/UserProfile'
-import { UserProfile as Profile } from '../../Custom_Components/UserProfile';
+import { UserProfile as Profile } from '../Profile/UserProfile';
 
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function BasicExample() {
 
@@ -20,7 +16,7 @@ function BasicExample() {
             <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Supplier</span>
           </a>
           <div class="flex items-center space-x-6 rtl:space-x-reverse">
-            <a href="tel:5541251234" class="text-sm  text-gray-500 dark:text-white hover:underline">(555) 412-1234</a>
+           
             <a href="#" class="text-sm  text-blue-600 dark:text-blue-500 hover:underline"><Profile></Profile></a>
           </div>
         </div>

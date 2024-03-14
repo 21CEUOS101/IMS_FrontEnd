@@ -302,9 +302,72 @@ export const CReturnOrder = async () => {
         return null; // Or handle the error as needed
     }
 }
+export const getsupplyorderstatusDbyDId = async () => {
+    try {
+        const response = await Axios.get(`${url}/api/supply-order/getsupplyorderstatusDbyDId/${id}`,config);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null; // Or handle the error as needed
+    }
+}
+export const getsupplyorderstatusABDTbyDId = async () => {
+    try {
+        const response = await Axios.get(`${url}/api/supply-order/getsupplyorderstatusABDTbyDId/${id}`,config);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null; // Or handle the error as needed
+    }
+}
+export const getsupplyorderstatusABDFbyDId = async () => {
+    try {
+        const response = await Axios.get(`${url}/api/supply-order/getsupplyorderstatusABDFbyDId/${id}`,config);
+        // return response.data;
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null; // Or handle the error as needed
+    }
+}
 export const CReturnSupplyOrder = async () => {
     try {
         const response = await Axios.get(`${url}/api/return-supply-orderstatusCByDid/${id}`,config);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null; // Or handle the error as needed
+    }
+}
+export const UpdatestatusDTByDid = async (data) => {
+
+    try {
+        const response = await Axios.post(`${url}/api/supply-order/UpdatestatusDTByDid/${id}/data`, null, {
+            params: {
+                data: data
+            },
+            ...config  // assuming config is defined and contains any necessary headers
+        });
+        // console.log("hello2");
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null; // Or handle the error as needed
+    }
+}
+export const ChangeStatusDt = async (id1,status) => {
+
+    try {
+        const response = await Axios.post(`${url}/api/supply-order/${id1}/status`, null, {
+            params: {
+                status: status
+            },
+            ...config  // assuming config is defined and contains any necessary headers
+        });
+        // console.log("hello2");
+        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error('Error fetching data:', error);

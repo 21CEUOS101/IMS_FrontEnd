@@ -9,7 +9,9 @@ import { getorder_statusCByDId } from '../../Services/DeliveryManService';
 import { getw2worder_statusCByDId } from '../../Services/DeliveryManService';
 import { CReturnOrder } from '../../Services/DeliveryManService';
 import { CReturnSupplyOrder } from '../../Services/DeliveryManService';
+import { getsupplyorderstatusDbyDId } from '../../Services/DeliveryManService';
 import Example from '../Loader/Spokes';
+import SupplyOrder from './Supplyorder'
 import ReturnOrderCard from './ReturnOrderCard'
 export const Completed = () => {
   const [orderData, setOrderData] = useState([]);
@@ -18,6 +20,8 @@ export const Completed = () => {
   const [returnSupplyOrderData, setReturnSupplyOrderData] = useState([]);
   const [currentOrderPage, setCurrentOrderPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [supplyOrderData, setSupplyOrderData] = useState([]); 
+  
   const [selectedOption, setSelectedOption] = useState('order');
 
   useEffect(() => {
@@ -27,11 +31,13 @@ export const Completed = () => {
         const w2worder = await getw2worder_statusCByDId();
         const returnOrd = await CReturnOrder();
         const returnSupplyOrd = await CReturnSupplyOrder();
+        const supplyOrd = await getsupplyorderstatusDbyDId();
         setOrderData(order);
         setw2wOrderData(w2worder);
         setReturnOrderData(returnOrd);
         setReturnSupplyOrderData(returnSupplyOrd);
         setLoading(false);
+        setSupplyOrderData(supplyOrd);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -59,6 +65,9 @@ export const Completed = () => {
     case 'returnsupplyorder':
       currentData = returnSupplyOrderData;
       break;
+      case 'supplyorder':
+        currentData = supplyOrderData;
+        break;
     default:
       currentData = orderData;
   }
@@ -136,15 +145,29 @@ export const Completed = () => {
           >
             Return Supply Orders
           </button>
+          <button
+            onClick={() => { setSelectedOption('supplyorder'); setCurrentOrderPage(1); }}
+            style={{
+              padding: '10px 20px',
+              backgroundColor: selectedOption === 'supplyorder' ? '#4CAF50' : '#ddd',
+              color: selectedOption === 'supplyorder' ? '#fff' : '#000',
+              border: 'none',
+              marginRight: '20px',
+              borderRadius: '5px',
+              cursor: 'pointer',
+            }}
+          >
+            Supply Orders
+          </button>
         </div>
         {loading ? (
           <Example />
         ) : (
           currentData.length === 0 ? (
             <div>
-           
-            <h1>No items available for {selectedOption === 'order' ? 'Order' : selectedOption === 'w2worder' ? 'W2W Order' : selectedOption === 'returnorder' ? 'Return Order' : 'Return Supply Order'}</h1>
-            </div>
+  <h1>No items available for {selectedOption === 'order' ? 'Order' : selectedOption === 'w2worder' ? 'W2W Order' : selectedOption === 'returnorder' ? 'Return Order' : selectedOption === 'returnsupplyorder' ? 'Return Supply Order' : 'Supply Order'}</h1>
+</div>
+
           ) : (
             currentData.map((item, index) => (
               <div key={index}>
@@ -152,6 +175,7 @@ export const Completed = () => {
                 {selectedOption === 'w2worder' && <W2WOrderCard data={item} />}
                 {selectedOption === 'returnorder' && <ReturnOrderCard data={item} />}
                 {selectedOption === 'returnsupplyorder' && <ReturnSupplyOrderCard data={item} />}
+                {selectedOption === 'supplyorder' && <SupplyOrder data={item} />}
               </div>
             ))
           )

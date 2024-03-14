@@ -9,6 +9,7 @@ import { getorder_statusCByDId } from '../../Services/DeliveryManService';
 import { getw2worder_statusCByDId } from '../../Services/DeliveryManService';
 import { totalCancelOrder } from '../../Services/DeliveryManService';
 import { CReturnOrder } from '../../Services/DeliveryManService';
+import { getsupplyorderstatusABDTbyDId } from '../../Services/DeliveryManService';
 
 import { ReturnOrderShipped } from '../../Services/DeliveryManService';
 import { ReturnSupplyOrderShipped } from '../../Services/DeliveryManService';
@@ -23,6 +24,7 @@ import NCustomer from './NCustomer';
 import NCancel from './NCancel';
 import NCompleted from './NCompleted';
 import NReturned from './NReturned';
+import SupplyOrderCard from './SupplyOrder'
 const Dashboard = () => {
   // const id = 'd800453';
   const [orderData, setOrderData] = useState({});
@@ -41,6 +43,8 @@ const Dashboard = () => {
   const [ord, setord] = useState(false);
   const [Completed, setCompleted] = useState(false);
   const [Return, setReturn] = useState(false);
+  const [SupplyOrder, setsup] = useState([]);
+
   const handleInfo = () => {
     setware(true);
   };
@@ -91,6 +95,7 @@ const Dashboard = () => {
         const w2word = await getw2worder_statusCByDId();
         const cancel = await totalCancelOrder();
         const r = await CReturnOrder();
+        const s = await getsupplyorderstatusABDTbyDId();
         setOrderData(order);
         setw2wOrderData(w2worder);
         setReturnOrder(retu);
@@ -101,6 +106,7 @@ const Dashboard = () => {
         setw2w(w2word);
         setRet(r);
         setorders(cancel);
+        setsup(s);
         setloading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -129,7 +135,7 @@ const Dashboard = () => {
           bg={variant.toLowerCase() === 'magenta' ? 'newVariantColor' : variant.toLowerCase()}
             key={variant}
             text={variant.toLowerCase() === 'light' ? 'dark' : 'dark'}
-            style={{ width: '14rem', marginRight: '20px', marginBottom: '0px', height: "220px" }}
+            style={{ width: '14rem', marginRight: '18px', marginBottom: '0px', height: "220px" }}
             className="mb-2"
           >
             {variant === 'Warning' && <Card.Header>Customers</Card.Header>}
@@ -167,26 +173,31 @@ const Dashboard = () => {
         {loading ? (
   <Bars />
 ) : (
-  orderData?.order === undefined && w2wOrderData?.w2worder === undefined && ReturnOrder?.returnorder === undefined && ReturnSupplyOrder?.rso === undefined ? (
+  orderData?.order === undefined && w2wOrderData?.w2worder === undefined && ReturnOrder?.returnorder === undefined && ReturnSupplyOrder?.rso === undefined && SupplyOrder?.supplyorder === undefined ? (
     <h1>No order is being delivered</h1>
   ) : (
-    orderData?.order === undefined && ReturnOrder?.returnorder === undefined && ReturnSupplyOrder?.rso === undefined ? (
+    orderData?.order === undefined && ReturnOrder?.returnorder === undefined && ReturnSupplyOrder?.rso === undefined && SupplyOrder?.supplyorder === undefined ? (
       w2wOrderData && <W2WOrderCard data={w2wOrderData} />
     ) : (
-      w2wOrderData?.w2worder === undefined && ReturnOrder?.returnorder === undefined && ReturnSupplyOrder?.rso === undefined ? (
+      w2wOrderData?.w2worder === undefined && ReturnOrder?.returnorder === undefined && ReturnSupplyOrder?.rso === undefined && SupplyOrder?.supplyorder === undefined ? (
         orderData && <OrderCard data={orderData} />
       ) : (
-        w2wOrderData?.w2worder === undefined && orderData?.order === undefined && ReturnSupplyOrder?.rso === undefined ? (
+        w2wOrderData?.w2worder === undefined && orderData?.order === undefined && ReturnSupplyOrder?.rso === undefined && SupplyOrder?.supplyorder === undefined ? (
           ReturnOrder && <ReturnOrderCard data={ReturnOrder} />
         ) : (
-          w2wOrderData?.w2worder === undefined && orderData?.order === undefined && ReturnOrder?.returnorder === undefined ? (
+          w2wOrderData?.w2worder === undefined && orderData?.order === undefined && ReturnOrder?.returnorder === undefined && SupplyOrder?.supplyorder === undefined ? (
             ReturnSupplyOrder && <ReturnSupplyOrderCard data={ReturnSupplyOrder} />
-          ) : null
+          ) : (
+            w2wOrderData?.w2worder === undefined && orderData?.order === undefined && ReturnOrder?.returnorder === undefined && ReturnSupplyOrder?.rso === undefined ? (
+              SupplyOrder && <SupplyOrderCard data={SupplyOrder} />
+            ) : null
+          )
         )
       )
     )
   )
 )}
+
 
           <NWarehouse isOpen={ware} handleClose={closeInfo} details={warehouses} />
           <NCustomer isOpen={cust} handleClose={closewarning} details={customers} />

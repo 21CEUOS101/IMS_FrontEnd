@@ -76,6 +76,29 @@ export const getallcancelledByMid = async () => {
         return null; // Or handle the error as needed
     }
 }
+
+export const getdetailsofwarehouse = async () => {
+    try {
+        // console.log(id);
+        const response = await Axios.get(`${url}/api/warehouseDetails/${id}`, config);
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null; // Or handle the error as needed
+    }
+}
+export const getallProducts = async () => {
+    try {
+        // console.log(id);
+        const response = await Axios.get(`${url}/api/warehouse/getallproduct/${id}`, config);
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null; // Or handle the error as needed
+    }
+}
 export const makeSupplierOrderByWId = async (data) => {
     try {
         const response = await Axios.post(`${url}/api/wmanager/makeSupplierOrderByWId/${id}/data`, null, {

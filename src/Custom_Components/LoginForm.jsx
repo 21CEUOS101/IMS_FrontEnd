@@ -43,35 +43,38 @@ export function LoginForm() {
     },
   });
 
-  async function onSubmit(values) {
-    if (values.email && values.password) {
-      console.log(values);
-      const data = {
-        username: values.email,
-        password: values.password,
-      };
-      const response = await Login(data);
-
-      if (response.token != null) {
-        Swal.fire({
-          title: "Login successfully",
-         
-          icon: "success" 
-        }).then(()=>[
-        
-          window.location.href="/Delivery_man/Dashboard"
-        ]);
-      }
-
-      console.log(response);
-    }
-  }
-
   const navigate = useNavigate();
 
-  const role = "User";
-
   const time = new Date().getHours() < 12 ? "Morning" : "Afternoon";
+
+  async function onSubmit(values) {
+    
+    try {
+      const response = await Login({
+        username: values.email,
+        password: values.password,
+      });
+      // console.log(response.message)
+      if (response.message.token) {
+        Swal.fire({
+          title: "Login successful",
+          icon: "success",
+        }).then(() => navigate("/Delivery_man/Dashboard"));
+      } else {
+        Swal.fire({
+          title: "Login failed",
+          text: "Invalid email or password.",
+          icon: "error",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        title: "Error",
+        text: "An error occurred while logging in.",
+        icon: "error",
+      });
+    }
+  }
 
   return (
     <Form {...form}>
@@ -112,7 +115,7 @@ export function LoginForm() {
                       <FormControl>
                         <Input
                           placeholder="********"
-                          type={"password"}
+                          type="password"
                           {...field}
                         />
                       </FormControl>
