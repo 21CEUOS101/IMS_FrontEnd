@@ -1,19 +1,11 @@
-import { useToast } from '../components/ui/use-toast';
-import { Button } from '../components/ui/button'
-import React from 'react'
-import { AlertDialogM } from '../Custom_Components/AlertDialogM';
-import DemoCard from '../Custom_Components/DemoCard';
+import React from 'react';
 
-function NotFound() {
+const PageNotFound = () => {
+    return (
+        <div id="wrapper" style={{ height: '100%' }}>
+            <img src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*DeBkx8vjbumpCO-ZkPE9Cw.png" style={{width:907 ,height:567}} alt="Page Not Found" />
+        </div>
+    );
+};
 
-    const toast = useToast();
-  return (
-      <div>
-          <AlertDialogM >
-          </AlertDialogM>
-          <DemoCard />
-      </div>
-  )
-}
-
-export default NotFound
+export default PageNotFound;

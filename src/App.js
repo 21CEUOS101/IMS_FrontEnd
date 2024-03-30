@@ -5,7 +5,7 @@ import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import "./styles/globals.css";
 import { url } from "./Services";
-import { useEffect, useState,createContext } from "react";
+import { useEffect, useState, createContext } from "react";
 import Axios from "axios";
 import Dashboard from "./Delivery_man/Dashboard/Dashboard";
 import Sidebar from "./Delivery_man/Sidebar";
@@ -34,30 +34,22 @@ import MCancelled from './WManager/Cancelled/Cancelled';
 import MPending from './WManager/PendingOrders/Pending'
 import NotFound from "./Pages/NotFound";
 export const AppContext = createContext();
+const USER_TYPES = {
+  DELIVERY_MAN: 'deliveryman',
+  SUPPLIER: 'supplier',
+  MANAGER: 'manager'
+}
+const CURRENT_USER_TYPE = USER_TYPES.DELIVERY_MAN;
+const role = localStorage.getItem('role');
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const username = localStorage.getItem('id');
   const password = localStorage.getItem('password');
+
   const token = localStorage.getItem('jwt');
 
-  const checkLogin = () => {
-    Axios.post(`${url}/auth/login`, { username: username, password: password })
-      .then((response) => {
-        console.log(response);
-        if (response.data == "Credentials Invalid !!")
-        {
-          setIsLoggedIn(false);
-        }
-        else {  
-          setIsLoggedIn(true);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsLoggedIn(false);
-      });
-  }
+
 
   useEffect(() => {
     if (username && password && token) {
@@ -68,49 +60,84 @@ function App() {
   }, []);
 
   return (
-      <AppContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
-    <Router>
-    {isLoggedIn ? (
-          <div className="App">
-       
-        <Routes>
-         
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        
-                  
-                     <Route path="/Delivery_man/Sidebar" element={<Sidebar></Sidebar>}></Route>
-                    <Route path="/Delivery_man/Dashboard" element={<Dashboard></Dashboard>}></Route>
-                    <Route path="/Delivery_man/Completed" element={<Completed></Completed>}></Route>
-                    <Route path="/Delivery_man/Pending" element={<Pending></Pending>}></Route>
-                    <Route path="/Delivery_man/Return" element={<Return></Return>}></Route>
-                    <Route path="/Delivery_man/Logout" element={<Logout></Logout>}></Route> 
-                    <Route path="/Delivery_man/Sample" element={<Examples></Examples>}></Route> 
+    <AppContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
 
-                    <Route path ="/Manager/Home" element={<MHome></MHome>}></Route>
-                    <Route path ="/Manager/pending" element={<MPending></MPending>}></Route>
-                    <Route path ="/Manager/approvedBDF" element={<MABDF></MABDF>}></Route>
-                    <Route path ="/Manager/approvedBDT" element={<MABDT></MABDT>}></Route>
-                    <Route path ="/Manager/Delivered" element={<MDelivered></MDelivered>}></Route>
-                    <Route path ="/Manager/Cancelled" element={<MCancelled></MCancelled>}></Route>
-             
-                    <Route path ="/Supplier/Home" element={<Home></Home>}></Route>
-                    <Route path ="/Supplier/approvedBDF" element={<SABDF></SABDF>}></Route>
-                    <Route path ="/Supplier/approvedBDT" element={<SABDT></SABDT>}></Route>
-                    <Route path ="/Supplier/Delivered" element={<SDelivered></SDelivered>}></Route>
-                    <Route path ="/Supplier/Cancelled" element={<SCancelled></SCancelled>}></Route>
-                    
+      {isLoggedIn ? (
+        <div className="App">
+
+          <Routes>
+
+            <Route path="/" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+
+            <Route path="/Delivery_man/Sidebar" element={<PublicElement><Sidebar /></PublicElement>} />
+            <Route path="/Delivery_man/Dashboard" element={<PublicElement><Dashboard /></PublicElement>} />
+            <Route path="/Delivery_man/Completed" element={<PublicElement><Completed /></PublicElement>} />
+            <Route path="/Delivery_man/Pending" element={<PublicElement><Pending /></PublicElement>} />
+            <Route path="/Delivery_man/Return" element={<PublicElement><Return /></PublicElement>} />
+            <Route path="/Delivery_man/Logout" element={<PublicElement><Logout /></PublicElement>} />
+            <Route path="/Delivery_man/Sample" element={<PublicElement><Examples /></PublicElement>} />
 
 
-        </Routes>
-      </div>
-       ) :
-       (<Login />)
-       }
-     </Router>
-   </AppContext.Provider>
- 
+            <Route path="/Manager/Home" element={<UserElement><MHome /></UserElement>} />
+            <Route path="/Manager/pending" element={<UserElement><MPending /></UserElement>} />
+            <Route path="/Manager/approvedBDF" element={<UserElement><MABDF /></UserElement>} />
+            <Route path="/Manager/approvedBDT" element={<UserElement><MABDT /></UserElement>} />
+            <Route path="/Manager/Delivered" element={<UserElement><MDelivered /></UserElement>} />
+            <Route path="/Manager/Cancelled" element={<UserElement><MCancelled /></UserElement>} />
+
+            <Route path="/Supplier/Home" element={<SupplierElement><Home /></SupplierElement>} />
+            <Route path="/Supplier/approvedBDF" element={<SupplierElement><SABDF /></SupplierElement>} />
+            <Route path="/Supplier/approvedBDT" element={<SupplierElement><SABDT /></SupplierElement>} />
+            <Route path="/Supplier/Delivered" element={<SupplierElement><SDelivered /></SupplierElement>} />
+            <Route path="/Supplier/Cancelled" element={<SupplierElement><SCancelled /></SupplierElement>} />
+
+            <Route path="*" element={<NotFound></NotFound>}></Route>
+
+
+
+
+          </Routes>
+        </div>
+      ) :
+        (<Login />)
+      }
+
+    </AppContext.Provider>
+
   );
 }
+function PublicElement({ children }) {
+  if (role === 'deliveryman') {
 
+    return <>
+      {children}
+    </>
+  }
+  else {
+    return <NotFound />
+  }
+}
+function UserElement({ children }) {
+  if (role === 'wmanager') {
+
+    return <>
+      {children}
+    </>
+  }
+  else {
+    return <NotFound />
+  }
+}
+function SupplierElement({ children }) {
+  if (role === 'supplier') {
+
+    return <>
+      {children}
+    </>
+  }
+  else {
+    return <NotFound />
+  }
+}
 export default App;
