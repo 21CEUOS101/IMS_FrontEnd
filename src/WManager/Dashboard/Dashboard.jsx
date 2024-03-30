@@ -1,6 +1,6 @@
 // import Profile from '../Custom_Components/UserProfile'
 // import Profile from "../Profile/UserProfile";
-import { UserProfile } from '../Profile/UserProfile';
+import { DUserProfile } from '../Profile/UserProfile';
 
 
 
@@ -19,7 +19,7 @@ function BasicExample() {
           </a>
           <div class="flex items-center space-x-6 rtl:space-x-reverse">
            
-            <a href="#" class="text-sm  text-blue-600 dark:text-blue-500 hover:underline"><UserProfile></UserProfile></a>
+            <a href="#" class="text-sm  text-blue-600 dark:text-blue-500 hover:underline"><DUserProfile></DUserProfile></a>
           </div>
         </div>
       </nav>

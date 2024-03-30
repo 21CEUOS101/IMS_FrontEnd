@@ -10,9 +10,9 @@ import {
 import { EditProfile } from "./EditProfileDeliveryman";
 import { useState } from "react";
 import { useEffect } from "react";
-import { getDeliveryManProfile } from '../../Services/DeliveryManService';
-import { UserProfile } from "./MoreDetails";
+import { getEmployeeById } from '../../Services/EmployeeProfile';
 
+import Swal from 'sweetalert2';
 
 export function DUserProfile() {
 
@@ -22,7 +22,7 @@ export function DUserProfile() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const profile = await getDeliveryManProfile();
+                const profile = await getEmployeeById(localStorage.getItem('id'));
                 setprofile(profile);
 
             } catch (error) {
@@ -34,7 +34,18 @@ export function DUserProfile() {
     }, []);
 
 
-
+    const handleLogout = () => {
+        // Clear localStorage
+        localStorage.clear();
+        Swal.fire({
+              title: "Logout successfully",
+              // text: "That thing is still around?",
+              icon: "success" 
+            }).then(()=>[
+            
+              window.location.href="/"
+            ]);
+    };
 
     return (
         <HoverCard>
@@ -51,21 +62,21 @@ export function DUserProfile() {
 
                     <div className="space-y-2">
                         <h4 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-                            {profile && profile.user.name}
+                            {profile && profile?.name}
                         </h4>
                         <small className="text-sm font-medium leading-none">Email address : </small>
-                        <p className="text-muted-foreground text-sm shadcn-light" style={{ fontStyle: "italic", color: "black", fontFamily: "unset" }}>{profile && profile.user.email}</p>
+                        <p className="text-muted-foreground text-sm shadcn-light" style={{ fontStyle: "italic", color: "black", fontFamily: "unset" }}>{profile && profile?.email}</p>
                         <small className="text-sm font-medium leading-none">Phone no. : </small>
-                        <p className="text-muted-foreground text-sm shadcn-light" style={{ fontStyle: "italic", color: "black", fontFamily: "unset" }}>{profile && profile.user.phone}</p>
-                        <small className="text-sm font-medium leading-none">Address :</small>
-                        <p className="text-muted-foreground text-sm shadcn-light" style={{ fontStyle: "italic", color: "black", fontFamily: "unset" }}>{profile && profile.warehouse.pincode}</p>
+                        <p className="text-muted-foreground text-sm shadcn-light" style={{ fontStyle: "italic", color: "black", fontFamily: "unset" }}>{profile && profile?.phone}</p>
                         <small className="text-sm font-medium leading-none">status :</small>
-                        <p className="text-muted-foreground text-sm shadcn-light" style={{ fontStyle: "italic", color: "black", fontFamily: "unset" }}>{profile && profile.deliveryman.status === 'unavailable' ? <span style={{ color: "red" }}>Unavailable</span> : <span style={{ color: "green" }}>Available</span>}</p>
+                        <p className="text-muted-foreground text-sm shadcn-light" style={{ fontStyle: "italic", color: "black", fontFamily: "unset" }}>{profile && profile?.status === 'unavailable' ? <span style={{ color: "red" }}>Unavailable</span> : <span style={{ color: "green" }}>Available</span>}</p>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                             <div style={{ marginRight: '10px' }}>
-                                {profile && <EditProfile data={profile}/>}
+                                {profile && <EditProfile employee={profile}/>}
                             </div>
-                            {profile && <UserProfile data={profile}/>}
+                            <Button variant="destructive" onClick={handleLogout}>
+         Logout
+        </Button>
                         </div>
                     </div>
                 </div>

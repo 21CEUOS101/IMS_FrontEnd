@@ -92,3 +92,27 @@ export async function updateAdminProfile(employee, id) {
     return data;
 
 }
+export async function updateWmanagerProfile(employee, id) {
+
+    let data = null;
+    data = await updateWManager(employee, id);
+
+    return data;
+
+}
+export async function updateDeliveryManProfile(employee, id) {
+
+    let data = null;
+    data = await updateDeliveryMan(employee, id);
+
+    return data;
+
+}
+export async function updateSupplierProfile(employee, id) {
+
+    let data = null;
+    data = await updateSupplier(employee, id);
+
+    return data;
+
+}

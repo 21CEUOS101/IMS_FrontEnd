@@ -5,7 +5,7 @@ import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import "./styles/globals.css";
 import { url } from "./Services";
-import { useEffect, useState } from "react";
+import { useEffect, useState,createContext } from "react";
 import Axios from "axios";
 import Dashboard from "./Delivery_man/Dashboard/Dashboard";
 import Sidebar from "./Delivery_man/Sidebar";
@@ -32,11 +32,12 @@ import MABDT from './WManager/MABDT/MABDT';
 import MDelivered from './WManager/Completed/CompletedOrders';
 import MCancelled from './WManager/Cancelled/Cancelled';
 import MPending from './WManager/PendingOrders/Pending'
-
+import NotFound from "./Pages/NotFound";
+export const AppContext = createContext();
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const username = localStorage.getItem('userId');
+  const username = localStorage.getItem('id');
   const password = localStorage.getItem('password');
   const token = localStorage.getItem('jwt');
 
@@ -59,23 +60,25 @@ function App() {
   }
 
   useEffect(() => {
-    if (username && password) {
-      checkLogin();
+    if (username && password && token) {
+      setIsLoggedIn(true);
     } else {
       setIsLoggedIn(false);
     }
   }, []);
 
   return (
+      <AppContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
     <Router>
-      <div className="App">
-        {/* {isLoggedIn && <Navbar/>} */}
+    {isLoggedIn ? (
+          <div className="App">
+       
         <Routes>
-          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+         
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          {/* {Deliverey_man} */}
-                   
+        
+                  
                      <Route path="/Delivery_man/Sidebar" element={<Sidebar></Sidebar>}></Route>
                     <Route path="/Delivery_man/Dashboard" element={<Dashboard></Dashboard>}></Route>
                     <Route path="/Delivery_man/Completed" element={<Completed></Completed>}></Route>
@@ -101,7 +104,12 @@ function App() {
 
         </Routes>
       </div>
-    </Router>
+       ) :
+       (<Login />)
+       }
+     </Router>
+   </AppContext.Provider>
+ 
   );
 }
 

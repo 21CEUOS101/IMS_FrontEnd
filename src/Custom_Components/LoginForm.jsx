@@ -24,7 +24,7 @@ import { ReloadIcon } from "@radix-ui/react-icons";
 import axios from "axios";
 import { Login } from "../Services/AuthService";
 import { useNavigate } from "react-router-dom";
-
+import { AppContext } from "../../src/App";
 const formSchema = z.object({
   email: z.string().email({
     message: "Please enter a valid email address.",
@@ -32,14 +32,19 @@ const formSchema = z.object({
   password: z.string({
     message: "Please enter a valid password.",
   }),
+  role: z.enum(["DeliveryMan", "Supplier", "WManager"]).optional(),
 });
 
 export function LoginForm() {
+
+  const { setIsLoggedIn } = React.useContext(AppContext);
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
       password: "",
+      role: "DeliveryMan", // Default role value
     },
   });
 
@@ -48,33 +53,64 @@ export function LoginForm() {
   const time = new Date().getHours() < 12 ? "Morning" : "Afternoon";
 
   async function onSubmit(values) {
-    
     try {
-      const response = await Login({
-        username: values.email,
-        password: values.password,
-      });
-      // console.log(response.message)
-      if (response.message.token) {
-        Swal.fire({
-          title: "Login successful",
-          icon: "success",
-        }).then(() => navigate("/Delivery_man/Dashboard"));
-      } else {
-        Swal.fire({
-          title: "Login failed",
-          text: "Invalid email or password.",
-          icon: "error",
+        const response = await Login({
+            username: values?.email,
+            password: values?.password,
         });
-      }
+        
+        if (response?.message?.token) {
+            localStorage.setItem('username', response?.message?.username);
+            localStorage.setItem('role', response?.message?.role);
+            localStorage.setItem('id', response?.message?.id);
+
+            if ((response?.message?.role || '').toLowerCase() === (values?.role || '').toLowerCase()) {
+                // Display a SweetAlert for successful login
+                setIsLoggedIn(true);
+                Swal.fire({
+                    title: "Login successful",
+                    icon: "success",
+                }).then(() => {
+                    // Navigate based on the user's role
+                    switch (values?.role) {
+                        case 'DeliveryMan':
+                            window.location.href = "/Delivery_man/Dashboard";
+                            break;
+                        case 'Supplier':
+                            window.location.href = "/Supplier/Home";
+                            break;
+                        case 'WManager':
+                            window.location.href = "/Manager/Home";
+                            break;
+                        default:
+                            // Redirect to a default dashboard or homepage if the role is not recognized
+                            window.location.href = "/";
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: "Login failed",
+                    text: "Invalid role.",
+                    icon: "error",
+                });
+            }
+        } else {
+            Swal.fire({
+                title: "Login failed",
+                text: "Invalid email or password.",
+                icon: "error",
+            });
+        }
     } catch (error) {
-      Swal.fire({
-        title: "Error",
-        text: "An error occurred while logging in.",
-        icon: "error",
-      });
+        Swal.fire({
+            title: "Error",
+            text: "An error occurred while logging in.",
+            icon: "error",
+        });
     }
-  }
+}
+
+
 
   return (
     <Form {...form}>
@@ -118,6 +154,26 @@ export function LoginForm() {
                           type="password"
                           {...field}
                         />
+                      </FormControl>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="role"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="flex flex-col space-y-1.5">
+                      <FormLabel htmlFor="role">Role</FormLabel>
+                      <FormControl>
+                        <select {...field} className="input-field">
+                          <option value="DeliveryMan">DeliveryMan</option>
+                          <option value="Supplier">Supplier</option>
+                          <option value="WManager">WManager</option>
+                        </select>
                       </FormControl>
                     </div>
                     <FormMessage />

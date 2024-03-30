@@ -66,19 +66,7 @@ const Sidebar = () => {
             </CDBSidebarMenu>
           </CDBSidebarContent>
 
-          <CDBSidebarFooter style={{ textAlign: 'center' }}>
-            <div style={{ padding: '2px 2px' }}>
-              <CDBSidebarMenu>
-                <NavLink exact to="/Delivery_man/Logout" activeClassName="activeClicked" style={{color:"white"}}>
-
-                  <CDBSidebarMenuItem icon="user" className="sidebar-item">
-                    Logout
-                  </CDBSidebarMenuItem>
-                </NavLink>
-              </CDBSidebarMenu>
-
-            </div>
-          </CDBSidebarFooter>
+          
         </CDBSidebar>
       </div>
 

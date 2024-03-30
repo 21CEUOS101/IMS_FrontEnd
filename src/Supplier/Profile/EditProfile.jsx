@@ -22,7 +22,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../../components/ui/form";
-import { updateAdminProfile } from "../../Services/EmployeeProfile";
+import { updateSupplierProfile } from "../../Services/EmployeeProfile";
 import { ChangePassword } from "./ChangePassword";
 
 const schema = z.object({
@@ -39,7 +39,7 @@ const schema = z.object({
   }).length(10),
 });
 
-export function EditProfile({ employee , setRefresh , refresh }) {
+export function EditProfile({ employee}) {
 
   const id = localStorage.getItem("id");
   const password = localStorage.getItem("password");
@@ -56,9 +56,9 @@ export function EditProfile({ employee , setRefresh , refresh }) {
   const onSubmit = async (data) => {
     data.id = id;
     data.password = password;
-    await updateAdminProfile(data , id).then((response) => {
-      setRefresh((prev) => !prev);
-      form.reset();
+    await updateSupplierProfile(data , id).then((response) => {
+      if(response)
+     window.location.herf="/Supplier/Home"
     });
   };
 

@@ -6,6 +6,7 @@ import { Toaster } from './components/ui/toaster';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <>
+    
         <App />
         <Toaster />
     </>
