@@ -68,8 +68,11 @@ export function DUserProfile() {
                         <p className="text-muted-foreground text-sm shadcn-light" style={{ fontStyle: "italic", color: "black", fontFamily: "unset" }}>{profile && profile?.email}</p>
                         <small className="text-sm font-medium leading-none">Phone no. : </small>
                         <p className="text-muted-foreground text-sm shadcn-light" style={{ fontStyle: "italic", color: "black", fontFamily: "unset" }}>{profile && profile?.phone}</p>
-                        <small className="text-sm font-medium leading-none">status :</small>
+                        <small className="text-sm font-medium leading-none">Warehouse Id : </small>
+                        <p className="text-muted-foreground text-sm shadcn-light" style={{ fontStyle: "italic", color: "black", fontFamily: "unset" }}>{profile && profile?.warehouseId}</p>
+                       <small className="text-sm font-medium leading-none">status :</small>
                         <p className="text-muted-foreground text-sm shadcn-light" style={{ fontStyle: "italic", color: "black", fontFamily: "unset" }}>{profile && profile?.status === 'unavailable' ? <span style={{ color: "red" }}>Unavailable</span> : <span style={{ color: "green" }}>Available</span>}</p>
+                       
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                             <div style={{ marginRight: '10px' }}>
                                 {profile && <EditProfile employee={profile}/>}

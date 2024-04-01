@@ -25,7 +25,7 @@ const OrderDetailsDialog = ({ isOpen, handleClose, details }) => {
                         <h6>Status: <span style={{ color: order.status === 'delivered' ? "green" : order.status === 'pending' ? "red" : "blue" }}>{order.status}</span></h6>
                         <h6>Quantity: {order.quantity}</h6>
                         <h6>Total Amount: {order.total_amount}</h6>
-                        <h6>Delivery Date Time: {order.delivered_date_time}</h6>
+                       
                         <h6>Date Time: {order.date_time}</h6>
                         <h6>Payment Method: {order.payment_method}</h6>
                         <h6>Transaction ID: {order.transaction_id || "--------------"}</h6>

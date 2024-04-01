@@ -171,7 +171,7 @@ function HoverCardWithHeaderExample({ data }) {
               cursor: 'pointer',
               width:"100px",
               marginBottom:"10px",
-              marginTop:"20px",
+              marginTop:"13px",
               transition: 'background-color 0.3s ease',
             }}
             onClick={() => handleOpenDialog(data)}

@@ -124,6 +124,8 @@ function HoverCardWithHeaderExample({ data }) {
           <Card.Text style={{ color: '#000', fontSize: "1rem" }}><span style={{ fontStyle: "italic" }}>Total Amount :{supplyorder.total_amount}</span></Card.Text>
         </div>
         <div style={{ flex: 0.3 }}>
+        Status: <span style={{fontStyle:"italic",color:"purple"}}> {supplyorder?.status === "approved" ? "Approved" :"pending"}</span>
+    
           <Button
             style={{
               backgroundColor: isHovered1 ? '#FF4500' : '#DC143C',
@@ -135,6 +137,7 @@ function HoverCardWithHeaderExample({ data }) {
               cursor: 'pointer',
               width:"100px",
               transition: 'background-color 0.3s ease',
+              marginTop:"13px"
             }}
             onClick={() => handleOpenDialog(data)}
             onMouseEnter={handleMouseEnter1}
