@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import Swal from 'sweetalert2';
 import { Button } from "../components/ui/button";
 import {
@@ -25,6 +25,7 @@ import axios from "axios";
 import { Login } from "../Services/AuthService";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../src/App";
+
 const formSchema = z.object({
   email: z.string().email({
     message: "Please enter a valid email address.",
@@ -32,7 +33,7 @@ const formSchema = z.object({
   password: z.string({
     message: "Please enter a valid password.",
   }),
-  role: z.enum(["DeliveryMan", "Supplier", "WManager"]).optional(),
+  role: z.enum(["DeliveryMan", "Supplier", "WManager", "Customer"]).optional(),
 });
 
 export function LoginForm() {
@@ -82,6 +83,9 @@ export function LoginForm() {
                         case 'WManager':
                             window.location.href = "/Manager/Home";
                             break;
+                        case 'Customer':
+                            window.location.href = "/Customer"; // Assuming Customer has its own home page
+                            break;
                         default:
                             // Redirect to a default dashboard or homepage if the role is not recognized
                             window.location.href = "/";
@@ -109,8 +113,6 @@ export function LoginForm() {
         });
     }
 }
-
-
 
   return (
     <Form {...form}>
@@ -173,6 +175,7 @@ export function LoginForm() {
                           <option value="DeliveryMan">DeliveryMan</option>
                           <option value="Supplier">Supplier</option>
                           <option value="WManager">WManager</option>
+                          <option value="Customer">Customer</option> // Added Customer role
                         </select>
                       </FormControl>
                     </div>

@@ -33,6 +33,7 @@ import MDelivered from './WManager/Completed/CompletedOrders';
 import MCancelled from './WManager/Cancelled/Cancelled';
 import MPending from './WManager/PendingOrders/Pending'
 import NotFound from "./Pages/NotFound";
+import Customer from './Customer/Home'
 export const AppContext = createContext();
 const USER_TYPES = {
   DELIVERY_MAN: 'deliveryman',
@@ -91,7 +92,9 @@ function App() {
             <Route path="/Supplier/approvedBDT" element={<SupplierElement><SABDT /></SupplierElement>} />
             <Route path="/Supplier/Delivered" element={<SupplierElement><SDelivered /></SupplierElement>} />
             <Route path="/Supplier/Cancelled" element={<SupplierElement><SCancelled /></SupplierElement>} />
+            
 
+            <Route path="/Customer" element={<CustomerElements><Customer /></CustomerElements>} />
             <Route path="*" element={<NotFound></NotFound>}></Route>
 
 
@@ -131,6 +134,17 @@ function UserElement({ children }) {
 }
 function SupplierElement({ children }) {
   if (role === 'supplier') {
+
+    return <>
+      {children}
+    </>
+  }
+  else {
+    return <NotFound />
+  }
+}
+function CustomerElements({ children }) {
+  if (role === 'customer') {
 
     return <>
       {children}

@@ -91,7 +91,7 @@ function HoverCardWithHeaderExample({ data }) {
         transition: 'transform 0.3s, box-shadow 0.3s',
         borderRadius: '10px',
         overflow: 'hidden',
-        height: "190px",
+        height: "170px",
         marginBottom: "10px",
         background: 'linear-gradient(45deg, #7FB3D5, #BBE5F3)', 
       }}
